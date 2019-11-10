@@ -35,38 +35,42 @@ public class Ex22_baserelacionalE {
 
     }
 
-    ArrayList<TODO> contenidoTabla = new ArrayList<>();
-
     public void obtenerMetadata() {
 
         try {
             PreparedStatement pst = conn.prepareStatement("select produtos.* from produtos");
             ResultSetMetaData rsmd = pst.getMetaData();
-            
-            int numcolum  = rsmd.getColumnCount();
-            
+
+            int numcolum = rsmd.getColumnCount();
+            System.out.println("Nombre de columnas:");
+
             //solo nos pide el nombre de las columnas !
-            for(int i = 1; i< numcolum;i++){
-                
-                if(rsmd.getColumnType(i) == Types.VARCHAR){
-                    
-                   
-                    
-                }
-                
+            for (int i = 1; i <= numcolum; i++) {
+
+                System.out.println(rsmd.getColumnName(i));
+
             }
 
+            //introducir el contenido de cada columna en un ArrayList o Array genérico
+            //y mostrar el Array para comprobar que se hizo bien
+            //puede que haya que utilizar un switch
         } catch (SQLException ex) {
             Logger.getLogger(Ex22_baserelacionalE.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
 
     }
 
     public static void main(String[] args) {
 
         Ex22_baserelacionalE obj = new Ex22_baserelacionalE();
+
+        try {
+            obj.Conexion();
+            obj.obtenerMetadata();
+            obj.Cerrar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Ex22_baserelacionalE.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
